@@ -29,5 +29,12 @@ var superlogin = new SuperLogin(config.superlogConfig);
 // Mount SuperLogin's routes to our app 
 app.use('/auth', superlogin.router);
  
-app.listen(app.get('port'));
+var privateKey = fs.readFileSync( '/ect/couchdb/server.key' );
+var certificate = fs.readFileSync( '/ect/couchdb/server.crt' );
+
+https.createServer({
+    key: privateKey,
+    cert: certificate
+}, app).listen(app.get('port'));
+
 console.log("App listening on " + app.get('port'));
