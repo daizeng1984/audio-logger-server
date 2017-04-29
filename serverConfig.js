@@ -1,3 +1,4 @@
+var path = require('path');
 exports.superlogConfig = {
   dbServer: {
     protocol: 'https://',
@@ -33,3 +34,7 @@ exports.superlogConfig = {
   }
 }
 
+exports.https = {
+    key : path.join(__dirname, 'ssl/server.key'),
+    cert : path.join(__dirname, 'ssl/server.crt')
+}

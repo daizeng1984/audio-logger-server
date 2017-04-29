@@ -1,9 +1,10 @@
 var express = require('express');
-var http = require('http');
+var https = require('https');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var cors = require('cors');
 var SuperLogin = require('superlogin');
+var fs = require('fs');
  
 var app = express();
 app.set('port', process.env.PORT || 3000);
@@ -29,8 +30,8 @@ var superlogin = new SuperLogin(config.superlogConfig);
 // Mount SuperLogin's routes to our app 
 app.use('/auth', superlogin.router);
  
-var privateKey = fs.readFileSync( '/ect/couchdb/server.key' );
-var certificate = fs.readFileSync( '/ect/couchdb/server.crt' );
+var privateKey = fs.readFileSync( config.https.key );
+var certificate = fs.readFileSync( config.https.cert );
 
 https.createServer({
     key: privateKey,
